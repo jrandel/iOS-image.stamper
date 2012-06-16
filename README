@@ -1,0 +1,6 @@
+iOS-image.stamper
+
+Created by Jason Randel 6.15.2012
+
+
+A class that superimposes two UIImages, where the top image is positioned using an arbitrary affine transform
