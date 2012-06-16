@@ -2,5 +2,39 @@ iOS-image.stamper
 
 Created by Jason Randel 6.15.2012
 
+A class that superimposes two UIImages, where the top image is positioned using an arbitrary affine transform.
 
-A class that superimposes two UIImages, where the top image is positioned using an arbitrary affine transform
+JRImageStamper.h
+JRImageStamper.m
+
+HEADS UP: THIS CLASS IS NOT WELL-DOCUMENTED OR TESTED YET.
+
+The general usage is as follows:
+In a UIImageView, place a high-resolution photo (the "image").  This UIImageView has frame "imageFrame",
+and--if its content mode is set such that it does not occupy the entire frame--is offset from the corner
+of the imageFrame by imageFrameOffset.
+Create another UIImageView (containing the "stampImage") in a frame "initialStampFrame".  The JRImageStamper
+class is useful when the stampImage is in a UIImageView subclass that allows the user to drag, pinch,
+and rotate the stampImage relative to the image.
+Once the user has positioned the stampImage, create an instance of JRImageStamper, and pass it the
+image, stampImage, imageFrame, the transform property of the stampImage's UIImageView, the stampImage itself,
+and the initialStampFrame.  Next, if there is a non-zero imageFrameOffset, set it.
+Finally, call the stampedImage method to return a UIImage at the same resolution as the original image that
+has the stampImage superimposed as the same position as it appeared on the screen.
+
+More documentation to come at some point.
+
+Properties:
+image               the "bottom" image (usually an opaque photo) (UIImage*)
+imageFrame          the frame in which the image is placed
+stampImage          the "top" image (usually a partially-transparent image from PNG data) (UIImage*)
+initialStampFrame   the stamp image's original frame relative to the 
+transform           the CGAffineTransform that describes the desired stampImage position, in the initialStampFrame
+imageFrameOffset    if the image does not occupy the entire imageFrame, it's upper left corner 
+                      relative to the imageFrame should be given by this CGPoint.
+
+Methods:
++ imageStamperWithImage:imageFrame:transform:stamp:initialStampFrame:
+- stampedImage (returns the image with the stampImage superimposed on top of it, with position set by transform)
+- appendTransform:  (allows for additional transformations on the stampImage)
+
